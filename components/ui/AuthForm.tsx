@@ -21,6 +21,7 @@ import { Loader2, Router } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation"
 import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 
 const formSchema = (type:string)=>z.object({
@@ -109,9 +110,15 @@ const onSubmit=async(data: z.infer<typeof formSchemalmao>) =>{
           </h1>
         </div>
       </header>
-      {user ? (
-        <div className="flex flex-col gap-4">{/*{PlaidLINK} */}</div>
-      ) : (
+      {/* {user ? ( */}
+
+        <div className="flex flex-col gap-4">
+
+          {/*{PlaidLINK} */}
+          <PlaidLink user={user} variant="primary"/>
+          
+        </div>
+      {/* ) : ( */}
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -360,7 +367,7 @@ const onSubmit=async(data: z.infer<typeof formSchemalmao>) =>{
             </Link>
           </footer>
         </>
-      )}
+      {/* )} */}
     </section>
   );
 }
