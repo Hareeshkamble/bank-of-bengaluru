@@ -5,6 +5,7 @@ import { sidebarLinks } from "@/constants"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import Footer from "./Footer"
+import PlaidLink from "./PlaidLink"
 
 interface SidebarProps {
   user: {
@@ -13,42 +14,51 @@ interface SidebarProps {
   }
 }
 
-function Sidebar({ user }: SidebarProps) {
-  const pathname = usePathname()
+const Sidebar = ({ user }: SiderbarProps) => {
+  const pathname = usePathname();
 
   return (
-    <section className='sidebar'>
-      <nav className="flex-col flex gap-4">
-        <Link href="/" className="mb-12 flex cursor-pointer items-center gap-2">
-          <Image
+    <section className="sidebar">
+      <nav className="flex flex-col gap-4">
+        <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
+          <Image 
             src="/icons/logo.svg"
             width={34}
             height={34}
-            draggable="false"
-            alt="bob logo"
-            className="size-[24px] lg:size-[30px] mx-xl:size-20"
+            alt="Horizon logo"
+            className="size-[24px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">B_O_B</h1>
+          <h1 className="sidebar-logo">Horizon</h1>
         </Link>
 
-        {sidebarLinks.map((item, index) => {
+        {sidebarLinks.map((item) => {
           const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
+
           return (
-            <Link
-              href={item.route}
-              key={index}
-              className={cn("sidebar-link", { "bg-bank-gradient": isActive })}
+            <Link href={item.route} key={item.label}
+              className={cn('sidebar-link', { 'bg-bank-gradient': isActive })}
             >
-              <div className=" relative size-6">
-                <Image src={item.imgURL} alt={item.label} fill className={cn({"brightness-[3] invert-0":isActive})}></Image>
+              <div className="relative size-6">
+                <Image 
+                  src={item.imgURL}
+                  alt={item.label}
+                  fill
+                  className={cn({
+                    'brightness-[3] invert-0': isActive
+                  })}
+                />
               </div>
-              <p className={cn("sidebar-label",{"!text-white":isActive})}>{item.label}</p>
+              <p className={cn("sidebar-label", { "!text-white": isActive })}>
+                {item.label}
+              </p>
             </Link>
           )
         })}
-        USER
+        
+        <PlaidLink user={user} />
       </nav>
-      <Footer  user={user} />
+
+      <Footer user={user} />
     </section>
   )
 }
